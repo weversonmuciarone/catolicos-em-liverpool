@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comunidade Católica de Língua Portuguesa em Liverpool</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- PALETTE --- */
+        :root {
+            --primary: #00A859;       
+            --secondary: #FFC107;     
+            --accent: #007BFF;        
+            --light_blue: #E7EDF7;      
+            --text-charcoal: #333333; 
+            --cream: #F7F1E1;
+            --shadow: 0 10px 30px rgba(0,0,0,0.08);
+            --radius-btn: 50px;
+            --radius-card: 16px;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light_blue);
+            color: var(--text-charcoal);
+            overflow-x: hidden;
+            padding-bottom: 80px;
+        }
+
+        h1, h2, h3, h4 { font-family: 'Poppins', sans-serif; font-weight: 700; }
+
+        /* --- HEADER --- */
+        header {
+            background: var(--cream);
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-container { display: flex; align-items: center; gap: 15px; }
+        .logo-img { height: 60px; width: 60px; border-radius: 50%; object-fit: cover; border: 3px solid var(--secondary); }
+        .site-title { font-family: 'Poppins', sans-serif; font-size: 1.1rem; color: var(--primary); font-weight: 700; line-height: 1.2; }
+
+        /* Lang Switch */
+        .lang-switch { display: flex; gap: 10px; margin-right: 20px; }
+        .lang-btn { background: var(--bg-cream); border: 2px solid transparent; padding: 6px 14px; cursor: pointer; border-radius: 20px; font-weight: 700; font-family: 'Poppins', sans-serif; color: var(--text-charcoal); transition: 0.3s; }
+        .lang-btn.active { background-color: var(--accent); color: var(--white); box-shadow: 0 4px 10px rgba(0,123,255,0.3); }
+        .hamburger { font-size: 2rem; cursor: pointer; color: var(--primary); transition: transform 0.2s; }
+        .hamburger:hover { transform: scale(1.1); }
+
+        /* Mobile Menu */
+        .nav-overlay {height: 100%;width: 0;position: fixed;z-index: 2000;top: 0;right: 0;background-color: var(--primary);overflow-x: hidden;transition: 0.4s;padding-top: 60px;box-shadow: -4px 0 15px rgba(0,0,0,0.3);}
+        .nav-overlay a { padding: 15px 30px; text-decoration: none; font-size: 1.5rem; font-family: 'Poppins', sans-serif; font-weight: 600; color: var(--white); display: block; transition: 0.3s; }
+        .nav-overlay a:hover { background-color: rgba(255,255,255,0.1); color: var(--secondary); }
+        .nav-overlay .closebtn { position: absolute; top: 10px; right: 25px; font-size: 40px; }
+
+        /* --- HERO BANNER (RESIZING SECTION) --- */
+        .hero-image-container {
+            width: 100%;
+            background-color: #ddd; 
+            overflow: hidden; 
+            
+            /* --- EDIT BANNER SIZE HERE --- */
+            /* 
+               If the image is too tall on big screens, uncomment the 'max-height' line below 
+               and change 'auto' to a number (e.g., 600px).
+               However, if you set a max-height, the body might get cut again.
+               Keeping it 'auto' ensures the FULL image is always shown.
+            */
+            /* max-height: 600px; */ 
+            height: auto; 
+        }
+
+        .hero-image-container img {
+            width: 100%;
+            height: auto; /* 'auto' ensures aspect ratio is locked (no stretching) */
+            display: block;
+            
+            /* These settings ensure the whole image is visible */
+            object-fit: contain; 
+        }
+
+        /* Welcome Text */
+        .welcome-banner { background: linear-gradient(135deg, var(--accent), var(--primary)); color: var(--white); text-align: center; padding: 60px 20px; }
+        .welcome-banner h1 { margin: 0 0 15px 0; font-size: 2.2rem; text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .welcome-banner p { font-size: 1.3rem; max-width: 700px; margin: 0 auto; opacity: 0.95; }
+
+        /* Sections */
+        section { padding: 60px 20px; max-width: 1000px; margin: 0 auto; }
+        h2.section-title { text-align: center; color: var(--primary); font-size: 2.2rem; margin-bottom: 50px; position: relative; }
+        h2.section-title::after { content: ''; width: 80px; height: 6px; background: var(--secondary); position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%); border-radius: 4px; }
+
+        /* History */
+        .history-content h3 { color: var(--accent); margin-top: 40px; margin-bottom: 15px; font-size: 1.5rem; }
+        .history-content p { line-height: 1.8; margin-bottom: 20px; text-align: justify; color: #555; }
+        .visitors-list { list-style: none; padding: 0; }
+        .visitors-list li { background: var(--white); margin-bottom: 20px; padding: 25px; border-radius: var(--radius-card); box-shadow: 0 4px 15px rgba(0,0,0,0.03); border-left: 8px solid var(--secondary); }
+        .visitors-list strong { color: var(--primary); display: block; margin-bottom: 8px; font-size: 1.2rem; font-family: 'Poppins', sans-serif; }
+
+        /* --- CAROUSEL STYLES --- */
+        .carousel-wrapper {
+            position: relative;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .carousel-container {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            gap: 15px;
+            padding: 20px 5px;
+            /* Hide scrollbar but keep functionality */
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* IE 10+ */
+        }
+        .carousel-container::-webkit-scrollbar { display: none; /* Chrome/Safari */ }
+
+        .carousel-item {
+            min-width: 280px; /* Width of each slide */
+            height: 250px;
+            border-radius: var(--radius-card);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            flex-shrink: 0; /* Prevents shrinking */
+            position: relative;
+        }
+
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        .carousel-item:hover img { transform: scale(1.05); }
+
+        /* Carousel Navigation Buttons */
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: var(--white);
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.5rem;
+            transition: 0.3s;
+        }
+        .carousel-btn:hover { background-color: var(--primary); color: var(--white); }
+        .carousel-btn.prev { left: -20px; }
+        .carousel-btn.next { right: -20px; }
+
+        /* "Go to Gallery" Button Area */
+        .gallery-action { text-align: center; margin-top: 30px; }
+        .btn-gallery {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: #333;
+            padding: 15px 30px;
+            border-radius: var(--radius-btn);
+            text-decoration: none;
+            font-weight: 700;
+            font-family: 'Poppins', sans-serif;
+            transition: 0.3s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .btn-gallery:hover { transform: translateY(-3px); background-color: #ffca2c; }
+
+        /* Contact & Form */
+        .contact-container { background: var(--white); padding: 40px; border-radius: var(--radius-card); box-shadow: var(--shadow); text-align: center; }
+        /* Soft card style for less sharp squares */
+        .card-soft {
+            border-radius: var(--radius-card);
+            padding: 18px;
+            border: 1px solid rgba(0,0,0,0.04);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+            transition: transform .22s ease, box-shadow .22s ease;
+        }
+        .card-soft:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+        }
+        /* Softer presentation specifically for the welcome banner */
+        .welcome-banner.card-soft {
+            padding: 50px 20px; /* keep banner roomy */
+            border-radius: 18px; /* slightly larger radius */
+            border: 1px solid rgba(0,0,0,0.03); /* very subtle edge */
+            box-shadow: 0 20px 60px rgba(0,0,0,0.20); /* stronger, deeper shadow */
+        }
+        .welcome-banner.card-soft:hover {
+            transform: none; /* don't lift the main banner on hover */
+            box-shadow: 0 30px 80px rgba(0,0,0,0.25);
+        }
+        .contact-info { margin-bottom: 30px; font-size: 1.1rem; }
+        form { max-width: 600px; margin: 0 auto; text-align: left; }
+        label { font-weight: 600; color: var(--primary); margin-bottom: 5px; display: block; }
+        input, textarea { width: 100%; padding: 15px; margin-bottom: 20px; border: 2px solid #eee; border-radius: 12px; background-color: #fafafa; font-family: 'Open Sans', sans-serif; }
+        button.submit-btn { width: 100%; background-color: var(--secondary); color: #333; padding: 16px 20px; border: none; border-radius: var(--radius-btn); cursor: pointer; font-size: 1.1rem; font-weight: 700; font-family: 'Poppins', sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        button.submit-btn:hover { transform: scale(1.02); background-color: #ffca2c; }
+
+        /* Footer */
+        footer { background-color: var(--text-charcoal); color: white; text-align: center; padding: 50px 20px; margin-top: 50px; }
+        .social-icons { display: flex; justify-content: center; gap: 20px; margin-bottom: 20px; }
+        .social-link { display: inline-flex; align-items: center; justify-content: center; width: 55px; height: 55px; border-radius: 50%; background-color: rgba(255,255,255,0.15); transition: 0.3s; }
+        .social-link:hover { background-color: var(--secondary); transform: translateY(-5px); }
+        .social-link:hover svg { fill: #333; }
+        .social-link svg { width: 26px; height: 26px; fill: white; transition: fill 0.3s; }
+
+        .whatsapp-float { position: fixed; width: 65px; height: 65px; bottom: 30px; right: 30px; background-color: #25d366; color: #FFF; border-radius: 50%; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 5000; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
+        .whatsapp-float:hover { transform: scale(1.1) rotate(15deg); }
+        .whatsapp-float svg { width: 38px; height: 38px; fill: white; }
+
+        .lang-en { display: none; }
+        .lang-pt { display: block; }
+
+        @media (max-width: 600px) {
+            .site-title { font-size: 0.9rem; }
+            .carousel-btn { display: none; /* Hide arrows on mobile, they can swipe */ }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="logo-container">
+            <img src="logo.jpg" alt="Logo Comunidade" class="logo-img">
+            <div class="site-title">
+                <span class="lang-pt">Comunidade Católica de Língua Portuguesa em Liverpool</span>
+                <span class="lang-en">Liverpool Brazilian<br>Catholic Community</span>
+            </div>
+        </div>
+        <div style="display: flex; align-items: center;">
+            <div class="lang-switch">
+                <button class="lang-btn active" onclick="setLanguage('pt')">PT</button>
+                <button class="lang-btn" onclick="setLanguage('en')">EN</button>
+            </div>
+            <span class="hamburger" onclick="openNav()">&#9776;</span>
+        </div>
+    </header>
+
+    <!-- MOBILE MENU -->
+    <div id="myNav" class="nav-overlay">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="#home" onclick="closeNav()"><span class="lang-pt">Início</span><span class="lang-en">Home</span></a>
+        <a href="#about" onclick="closeNav()"><span class="lang-pt">Nossa História</span><span class="lang-en">Our History</span></a>
+        <a href="#gallery" onclick="closeNav()"><span class="lang-pt">Fotos</span><span class="lang-en">Photos</span></a>
+        <a href="#contact" onclick="closeNav()"><span class="lang-pt">Contato</span><span class="lang-en">Contact</span></a>
+    </div>
+
+    <!-- HERO IMAGE SECTION -->
+    <div class="hero-image-container" id="home">
+        <!-- Ensure your image is named hero_banner.jpg -->
+        <img src="hero_banner.jpg" alt="Comunidade Católica de Liverpool Banner">
+    </div>
+
+    <!-- WELCOME TEXT -->
+    <section class="welcome-banner card-soft">
+        <h1 class="lang-pt">Bem-vindos à Nossa Família</h1>
+        <h1 class="lang-en">Welcome to Our Family</h1>
+        <p class="lang-pt">Uma comunidade de fé, união e cultura brasileira em Liverpool.</p>
+        <p class="lang-en">A community of faith, unity, and Brazilian culture in Liverpool.</p>
+    </section>
+
+    <!-- HISTORY SECTION -->
+    <section id="about" class="history-content">
+        <div class="lang-pt">
+            <h2 class="section-title">Nossa História</h2>
+            <h3>O Início de Uma Jornada de Fé</h3>
+            <p>Nossa jornada iniciou-se em 2019, com um simples chamado à oração para uma Novena de Natal. No começo, reunimo-nos em poucas famílias, mas lentamente, novas pessoas interessadas começaram a aparecer.</p>
+            <h3>Nossa Casa em Kirkby</h3>
+            <p>Um momento decisivo foi o convite feito ao Padre Dave Nixon, Pároco da St Mary’s Mother of God em Kirkby (Liverpool). Desde então, Kirkby tornou-se a nossa casa.</p>
+            <h3>Visitas que Marcaram Nossa História</h3>
+                    <ul class="visitors-list">
+                    <li class="card-soft"><strong>Eliana Ribeiro</strong> Uma das vozes mais belas e conhecidas da música católica brasileira. Missionária consagrada por muitos anos na Comunidade Canção Nova, Eliana tem levado a evangelização através da música e da pregação pelo mundo todo, tocando corações com seu testemunho de conversão e fé.</li>
+                    <li class="card-soft"><strong>Padre Felipe</strong> Sacerdote zeloso que exerce um ministério importante como assistente de exorcismo. Sua presença em nossa comunidade foi um momento de formação e fortalecimento espiritual na luta contra o mal e na busca pela santidade.</li>
+                    <li class="card-soft"><strong>Padre Paulo Dêa</strong> Sacerdote Claretiano e "Missionário da Misericórdia", o Padre Paulo teve a distinta missão de servir como Capelão no Santuário de Nossa Senhora de Lourdes, na França. Sua visita nos trouxe a riqueza espiritual de um dos maiores santuários marianos do mundo.</li>
+                    <li class="card-soft"><strong>Padre Iágaro Domingos</strong> Sacerdote e missionário da Comunidade Missionária Providência Santíssima. Conhecido por seu forte ministério de pregação e oração, Padre Iágaro tem dedicado sua vida a levar a palavra de Deus com ardor e carisma missionário.</li>
+                    <li class="card-soft"><strong>Comunidade Colo de Deus</strong> Recebemos com alegria os jovens missionários e músicos desta comunidade que revolucionou a evangelização da juventude no Brasil. Com sua criatividade e unção, eles nos ajudaram a reacender a chama da fé, especialmente entre os mais jovens.</li>
+                    <li class="card-soft"><strong>Bruna</strong> Missionária e cantora talentosa, conhecida por sua parceria de palco e evangelização com o Frei Gilson. Bruna nos presenteou com sua voz e seu carisma, ajudando-nos a elevar nossos louvores a Deus.</li>
+                    <li class="card-soft"><strong>Weverson Muciarone</strong> Um cara bonitao e muito gente boa 😁🤣😎</li>
+                </ul>
+        </div>
+
+        <div class="lang-en">
+            <h2 class="section-title">Our History</h2>
+            <h3>The Beginning</h3>
+            <p>Our journey began in 2019 with a simple call to prayer for a Christmas Novena.</p>
+            <h3>Our Home in Kirkby</h3>
+            <p>A decisive moment was the invitation extended to Father Dave Nixon, Parish Priest of St Mary’s Mother of God in Kirkby.</p>
+            <h3>Visits</h3>
+                <ul class="visitors-list">
+                <li class="card-soft"><strong>Eliana Ribeiro</strong> One of the most beautiful and well-known voices in Brazilian Catholic music. A consecrated missionary for many years with the Canção Nova Community, Eliana has taken evangelisation through music and preaching worldwide, touching hearts with her testimony of conversion and faith.</li>
+                <li class="card-soft"><strong>Padre Felipe</strong> A zealous priest who exercises an important ministry as an assistant of exorcism. His presence in our community was a moment of formation and spiritual strengthening in the fight against evil and the pursuit of holiness.</li>
+                <li class="card-soft"><strong>Padre Paulo Dêa</strong> A Claretian priest and "Missionary of Mercy", Father Paulo had the distinct mission of serving as Chaplain at the Sanctuary of Our Lady of Lourdes in France. His visit brought us the spiritual richness of one of the world's greatest Marian shrines.</li>
+                <li class="card-soft"><strong>Padre Iágaro Domingos</strong> Priest and missionary of the Providência Santíssima Missionary Community. Known for his powerful ministry of preaching and prayer, Father Iágaro has dedicated his life to spreading the word of God with ardour and missionary charisma.</li>
+                <li class="card-soft"><strong>Comunidade Colo de Deus</strong> We joyfully welcomed the young missionaries and musicians from this community, which has revolutionised youth evangelisation in Brazil. With their creativity and anointing, they helped us rekindle the flame of faith, especially among the younger generation.</li>
+                <li class="card-soft"><strong>Bruna</strong> A missionary and talented singer, known for her stage partnership and evangelisation work with Friar Gilson. Bruna gifted us with her voice and charisma, helping us lift our praises to God.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- CAROUSEL GALLERY SECTION -->
+    <section id="gallery">
+        <h2 class="section-title">
+            <span class="lang-pt">Galeria de Fotos</span>
+            <span class="lang-en">Photo Gallery</span>
+        </h2>
+        
+        <div class="carousel-wrapper">
+            <button class="carousel-btn prev" onclick="scrollCarousel(-1)">&#10094;</button>
+            
+            <div class="carousel-container" id="galleryCarousel">
+                <!-- Add your images here -->
+                <div class="carousel-item"><img src="images/IMG-20191223-WA0021.jpg" onerror="this.src='https://via.placeholder.com/300?text=Foto+1'"></div>
+                <div class="carousel-item"><img src="images/IMG-20200116-WA0036.jpg" onerror="this.src='https://via.placeholder.com/300?text=Foto+2'"></div>
+                <div class="carousel-item"><img src="images/IMG-20200202-WA0031.jpg" onerror="this.src='https://via.placeholder.com/300?text=Foto+3'"></div>
+                <div class="carousel-item"><img src="images/IMG-20200301-WA0053.jpg" onerror="this.src='https://via.placeholder.com/300?text=Foto+4'"></div>
+                <div class="carousel-item"><img src="images/IMG-20200301-WA0054.jpg" onerror="this.src='https://via.placeholder.com/300?text=Foto+5'"></div>
+                <div class="carousel-item"><img src="images/IMG-20200816-WA0012.jpg" onerror="this.src='https://via.placeholder.com/300?text=Foto+6'"></div>
+                <div class="carousel-item"><img src="images/IMG-20211031-WA0004.jpg" onerror="this.src='https://via.placeholder.com/300?text=Foto+1'"></div>
+                <div class="carousel-item"><img src="images/IMG-20211019-WA0046.jpg" onerror="this.src='https://via.placeholder.com/300?text=Foto+2'"></div>
+                <div class="carousel-item"><img src="images/IMG-20211128-WA0039.jpg" onerror="this.src='https://via.placeholder.com/300?text=Foto+3'"></div>
+                <div class="carousel-item"><img src="images/IMG-20211226-WA0045.jpg" onerror="this.src='https://via.placeholder.com/300?text=Foto+4'"></div>
+                <div class="carousel-item"><img src="images/IMG-20211226-WA0044.jpg" onerror="this.src='https://via.placeholder.com/300?text=Foto+5'"></div>
+                <div class="carousel-item"><img src="images/IMG-20211226-WA0038.jpg" onerror="this.src='https://via.placeholder.com/300?text=Foto+6'"></div>
+            </div>
+
+            <button class="carousel-btn next" onclick="scrollCarousel(1)">&#10095;</button>
+        </div>
+
+        <!-- LINK TO EXTERNAL GALLERY -->
+        <div class="gallery-action">
+            <a href="#" class="btn-gallery" target="_blank">
+                <span class="lang-pt">Ver Álbum Completo (Google Drive)</span>
+                <span class="lang-en">View Full Album (Google Drive)</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact">
+        <h2 class="section-title">
+            <span class="lang-pt">Fale Conosco</span>
+            <span class="lang-en">Contact Us</span>
+        </h2>
+        <div class="contact-container card-soft">
+            <div class="contact-info">
+                <p><strong>St Mary’s Mother of God Church</strong></p>
+                <p>Kennelwood Ave, Kirkby, Liverpool L33 6UF</p>
+                <p>📞 +44 7700 900000</p>
+            </div>
+            <form action="mailto:email@example.com" method="post" enctype="text/plain">
+                <label class="lang-pt">Nome</label><label class="lang-en">Name</label>
+                <input type="text" name="name" required>
+                <label>Email</label>
+                <input type="email" name="mail" required>
+                <label class="lang-pt">Mensagem</label><label class="lang-en">Message</label>
+                <textarea name="comment" rows="5" required></textarea>
+                <button type="submit" class="submit-btn">
+                    <span class="lang-pt">Enviar Mensagem</span>
+                    <span class="lang-en">Send Message</span>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- WHATSAPP FLOAT -->
+    <a href="https://wa.me/447719188085" class="whatsapp-float" target="_blank" title="WhatsApp">
+        <svg viewBox="0 0 448 512"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3 18.7-68.1-4.4-6.9c-18.3-28.8-28-62.4-28-97.4 0-103.1 84-187 187.3-187 50.1 0 97.2 19.5 132.6 54.9 35.4 35.5 54.9 82.5 54.9 132.6 0 103.1-84 187.1-187.5 187.1zm102.6-140.2c-5.6-2.8-33.1-16.3-38.3-18.2-5.1-1.9-8.9-2.8-12.6 2.8-3.7 5.6-14.4 18.2-17.7 21.9-3.2 3.7-6.5 4.2-12.1 1.4-5.6-2.8-23.7-8.7-45.1-27.8-16.7-14.9-28-33.2-31.3-38.8-3.2-5.6-.3-8.6 2.4-11.4 2.5-2.5 5.6-6.5 8.4-9.8 2.8-3.2 3.7-5.4 5.6-9.1 1.9-3.7.9-6.9-.5-9.8-1.4-2.8-12.6-30.4-17.3-41.6-4.6-11.1-9.3-9.5-12.6-9.7-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.8 1.4-14.9 6.9-5.1 5.6-19.6 19.1-19.6 46.5 0 27.4 19.9 53.8 22.7 57.6 2.8 3.7 39.2 59.9 95 84 33.1 14.3 46.2 14.3 62.9 12 19-2.6 33.1-10.7 37.8-21 4.6-10.3 4.6-19.1 3.2-21.5-1.4-2.3-5.1-3.7-10.7-6.5z"/></svg>
+    </a>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="social-icons">
+            <a href="https://www.facebook.com/share/17kAQMob5Q/?mibextid=wwXIfr" class="social-link" title="Facebook" target="_blank"><svg viewBox="0 0 320 512"><path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"/></svg></a>
+            <a href="https://www.instagram.com/catolicos.em.liverpool?igsh=eWczaG94dTVnd285" class="social-link" title="Instagram" target="_blank"><svg viewBox="0 0 448 512"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.9 0-184.9zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg></a>
+        </div>
+        <p>&copy; 2025 Comunidade Católica de Língua Portuguesa em Liverpool.</p>
+    </footer>
+
+    <!-- LOGIC -->
+    <script>
+        function openNav() {if (window.innerWidth < 450) {document.getElementById("myNav").style.width = "85%";} else {document.getElementById("myNav").style.width = "300px"; }}
+        function closeNav() { document.getElementById("myNav").style.width = "0%"; }
+
+        function setLanguage(lang) {
+            const ptElements = document.querySelectorAll('.lang-pt');
+            const enElements = document.querySelectorAll('.lang-en');
+            const buttons = document.querySelectorAll('.lang-btn');
+            if (lang === 'pt') {
+                ptElements.forEach(el => el.style.display = 'block');
+                enElements.forEach(el => el.style.display = 'none');
+                buttons[0].classList.add('active'); buttons[1].classList.remove('active');
+            } else {
+                ptElements.forEach(el => el.style.display = 'none');
+                enElements.forEach(el => el.style.display = 'block');
+                buttons[0].classList.remove('active'); buttons[1].classList.add('active');
+            }
+        }
+        document.addEventListener('DOMContentLoaded', () => { setLanguage('pt'); });
+
+        // CAROUSEL LOGIC
+        function scrollCarousel(direction) {
+            const container = document.getElementById('galleryCarousel');
+            // Scroll by 300px left or right
+            container.scrollBy({ left: direction * 300, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
